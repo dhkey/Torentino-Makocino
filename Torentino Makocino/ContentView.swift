@@ -15,23 +15,17 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView {
             List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
+                NavigationLink(destination: AllTorrentsView()) {
+                    Label("All Torrents", systemImage: "cloud.fill")
                 }
-                .onDelete(perform: deleteItems)
+                NavigationLink(destination: AllTorrentsView()) {
+                    Label("Downloading...", systemImage: "arrow.down.circle.fill")
+                }
+                NavigationLink(destination: AllTorrentsView()) {
+                    Label("Completed", systemImage: "checkmark.rectangle.stack.fill")
+                }
             }
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-            .toolbar {
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
         } detail: {
             Text("Select an item")
         }
@@ -50,6 +44,24 @@ struct ContentView: View {
                 modelContext.delete(items[index])
             }
         }
+    }
+}
+
+struct AllTorrentsView: View {
+    var body: some View {
+        Text("All Torrents Page.")
+    }
+}
+
+struct DownloadingTorrentsView: View {
+    var body: some View {
+        Text("Downloading page.")
+    }
+}
+
+struct CompletedTorrentsView: View {
+    var body: some View {
+        Text("Completed torrents.")
     }
 }
 
